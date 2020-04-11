@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TRM</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      main {
+        font-size: xx-large;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="trm" />
+    </main>
+    <script>
+      const url = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=1";
+      const request = new Request(url);
+
+      fetch(request)
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+        })
+        .then(json => {
+          const trm = json[0];
+          if (trm !== undefined && trm.valor !== undefined) {
+            document.getElementById("trm").innerText = trm.valor;
+          }
+        })
+        .catch(_ => {
+          document.getElementById("trm").innerText = "...";
+        });
+    </script>
+  </body>
+</html>
