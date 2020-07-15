@@ -17,11 +17,14 @@
         text-align: center;
       }
       main {
-        font-size: xx-large;
         position: fixed;
         bottom: 50%;
         left: 50%;
+        text-align: center;
         transform: translate(-50%, -50%);
+      }
+      .main {
+        font-size: xx-large;
       }
       footer {
         position: fixed;
@@ -40,7 +43,8 @@
       </h1>
     </header>
     <main>
-      <div id="trm"></div>
+      <div class="main" id="trm"></div>
+      <div id="date"></div>
     </main>
     <footer>
       <a href="https://github.com/jpvillaisaza/trm">
@@ -50,6 +54,18 @@
     <script>
       const url = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=1";
       const request = new Request(url);
+
+      const toDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getUTCFullYear();
+        const month = date.getUTCMonth();
+        const day = date.getUTCDate();
+        return new Date(year, month, day).toLocaleDateString("es-CO", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+      };
 
       fetch(request)
         .then(response => {
@@ -65,6 +81,15 @@
               style: "currency"
             });
             document.getElementById("trm").innerText = value;
+            if (trm.vigenciadesde !== undefined && trm.vigenciahasta !== undefined) {
+              const dateFrom = toDate(trm.vigenciadesde);
+              const dateTo = toDate(trm.vigenciahasta);
+              if (dateFrom === dateTo) {
+                document.getElementById("date").innerText = dateFrom;
+              } else {
+                document.getElementById("date").innerText = dateFrom + " – " + dateTo;
+              }
+            }
           }
         })
         .catch(_ => {
