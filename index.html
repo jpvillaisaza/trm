@@ -49,6 +49,7 @@
       <div>
         <div class="main" id="trm"></div>
         <div id="date"></div>
+        <div id="diff"></div>
       </div>
       <div>
         <div id="trm2"></div>
@@ -106,6 +107,11 @@
               currency: "COP",
               style: "currency"
             });
+            const diff = new Number(trm.valor - trm2.valor).toLocaleString("es-CO", {
+              currency: "COP",
+              style: "currency"
+            });
+            document.getElementById("diff").innerText = diff;
             document.getElementById("trm2").innerText = value;
             if (trm2.vigenciadesde !== undefined && trm2.vigenciahasta !== undefined) {
               const dateFrom = toDate(trm2.vigenciadesde);
