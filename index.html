@@ -22,6 +22,9 @@
         left: 50%;
         text-align: center;
         transform: translate(-50%, -50%);
+
+        display: grid;
+        gap: 1rem;
       }
       .main {
         font-size: xx-large;
@@ -43,8 +46,14 @@
       </h1>
     </header>
     <main>
-      <div class="main" id="trm"></div>
-      <div id="date"></div>
+      <div>
+        <div class="main" id="trm"></div>
+        <div id="date"></div>
+      </div>
+      <div>
+        <div id="trm2"></div>
+        <div id="date2"></div>
+      </div>
     </main>
     <footer>
       <a href="https://github.com/jpvillaisaza/trm">
@@ -52,7 +61,7 @@
       </a>
     </footer>
     <script>
-      const url = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=1";
+      const url = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=2";
       const request = new Request(url);
 
       const toDate = (dateString) => {
@@ -91,9 +100,27 @@
               }
             }
           }
+          const trm2 = json[1];
+          if (trm2 !== undefined && trm2.valor !== undefined) {
+            const value = new Number(trm2.valor).toLocaleString("es-CO", {
+              currency: "COP",
+              style: "currency"
+            });
+            document.getElementById("trm2").innerText = value;
+            if (trm2.vigenciadesde !== undefined && trm2.vigenciahasta !== undefined) {
+              const dateFrom = toDate(trm2.vigenciadesde);
+              const dateTo = toDate(trm2.vigenciahasta);
+              if (dateFrom === dateTo) {
+                document.getElementById("date2").innerText = dateFrom;
+              } else {
+                document.getElementById("date2").innerText = dateFrom + " – " + dateTo;
+              }
+            }
+          }
         })
         .catch(_ => {
           document.getElementById("trm").innerText = "...";
+          document.getElementById("trm2").innerText = "...";
         });
     </script>
   </body>
