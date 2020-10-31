@@ -31,6 +31,17 @@
         left: 50%;
         transform: translate(-50%, -50%);
       }
+      .code {
+        stroke: black;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 5;
+      }
+      @media (prefers-color-scheme: dark) {
+        .code {
+          stroke: white;
+        }
+      }
     </style>
   </head>
   <body>
@@ -53,8 +64,12 @@
       </div>
     </main>
     <footer>
-      <a href="https://github.com/jpvillaisaza/trm">
-        GitHub
+      <a href="https://github.com/jpvillaisaza/trm" aria-label="Ver el proyecto en GitHub">
+        <svg class="code" viewBox="0 0 100 100" width="44" aria-hidden="true">
+          <polyline fill="none" points="30,30 10,50 30,70 "/>
+          <line x1="60" y1="20" x2="40" y2="80" />
+          <polyline fill="none" points="70,30 90,50 70,70 "/>
+        </svg>
       </a>
     </footer>
     <script>
